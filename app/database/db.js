@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../../config/database");
 
 const db = {};
@@ -9,5 +9,9 @@ db.connection = new Sequelize(
   config.password,
   config
 );
+
+// Vinculamos a nuestros modelos a la BD
+db.User = require("../models/user")(db.connection, DataTypes);
+db.Address = require("../models/address")(db.connection, DataTypes);
 
 module.exports = db;

@@ -7,6 +7,7 @@ module.exports = {
   database: DATABASE,
   host: HOST,
   dialect: "postgres",
+  logging: false,
   define: {
     timestamps: false,
   },
