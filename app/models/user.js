@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Usuario tiene una dirección:
+      User.hasOne(models.Address, { as: "residency", foreignKey: 'user_id' });
     }
   }
   User.init(

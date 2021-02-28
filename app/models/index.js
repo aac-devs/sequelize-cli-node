@@ -4,22 +4,36 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+// const env = process.env.NODE_ENV || "development";
+
+// Configuración
+// const config = require(__dirname + "/../config/config.json")[env]; // Original
+const config = require("../../config/database");
+
+
+// Declaración del objeto DB
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+// Inicializar la conexión
+// let sequelize;
+// if (config.use_env_variable) {
+//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
+// } else {
+//   sequelize = new Sequelize(
+//     config.database,
+//     config.username,
+//     config.password,
+//     config
+//   );
+// }
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
+// Buscar en el directorio
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (
@@ -31,9 +45,11 @@ fs.readdirSync(__dirname)
       sequelize,
       Sequelize.DataTypes
     );
+    // Cada modelo que hay en el directorio lo vinculamos a nuestro objeto DB
     db[model.name] = model;
   });
 
+// Realizar las asociaciones de los modelos
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

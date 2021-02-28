@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const { connection } = require("./database/db");
+// const { connection } = require("./database/db"); // Original
+const { sequelize } = require("./models/index");
 
 const port = process.env.PORT || 4000;
 
@@ -16,7 +17,8 @@ app.use("/", require("./routes"));
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 
-  connection.sync({ force: false }).then(() => {
+  // connection.sync({ force: false }).then(() => { // Original
+  sequelize.sync({ force: false }).then(() => {
     console.log("Se ha establecido la conexión con la Base de Datos");
   });
 });

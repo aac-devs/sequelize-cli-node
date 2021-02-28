@@ -10,6 +10,7 @@ module.exports = {
   logging: false,
   define: {
     timestamps: false,
+    underscored: true,
   },
   dialectOptions: {
     ssl: {
